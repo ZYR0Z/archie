@@ -2,8 +2,8 @@
 
 # Checking if is running in Repo Folder
 if [[ "$(basename "$(pwd)" | tr '[:upper:]' '[:lower:]')" =~ ^scripts$ ]]; then
-    echo "You are running this in ArchTitus Folder."
-    echo "Please use ./archtitus.sh instead"
+    echo "You are running this in archie Folder."
+    echo "Please use ./archie.sh instead"
     exit
 fi
 
@@ -12,11 +12,11 @@ fi
 echo "Installing git."
 pacman -Sy --noconfirm --needed git glibc
 
-echo "Cloning the ArchTitus Project"
-git clone https://github.com/zyr0z/archie --depth 1 ArchTitus
+echo "Cloning the archie Project"
+git clone https://github.com/zyr0z/archie --depth 1
 
-echo "Executing ArchTitus Script"
+echo "Executing archie Script"
 
-cd $HOME/ArchTitus
+cd $HOME/archie
 
-exec ./archtitus.sh
+exec ./archie.sh
