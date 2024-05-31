@@ -1,0 +1,3 @@
+[submodule "configs/.config"]
+	path = configs/.config
+	url = https://github.com/zyr0z/dotfiles
