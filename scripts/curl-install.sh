@@ -13,7 +13,8 @@ echo "Installing git."
 pacman -Sy --noconfirm --needed git glibc
 
 echo "Cloning the archie Project"
-git clone https://github.com/zyr0z/archie --depth 1
+# depth 1 for quicker download & recursive to ensure all submodules get pulled
+git clone https://github.com/zyr0z/archie --depth 1 --recursive
 
 echo "Executing archie Script"
 
