@@ -27,6 +27,20 @@ fi
 
 echo -ne "
 -------------------------------------------------------------------------
+                        Setting up SSH for Git
+-------------------------------------------------------------------------
+"
+
+if [[ $SSH_KEYGEN == "TRUE" ]]; then
+  # make sure github cli is installed
+  $AUR_HELPER -S --noconfirm --needed github-cli
+
+  chmod +x ${HOME}/archie/scripts/ssh-setup.sh
+  ./${HOME}/archie/scripts/ssh-setup.sh
+fi
+
+echo -ne "
+-------------------------------------------------------------------------
                Creating (and Theming) Grub Boot Menu
 -------------------------------------------------------------------------
 "

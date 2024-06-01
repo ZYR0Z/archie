@@ -1,37 +1,24 @@
 #!/bin/bash
+GH_TOKEN="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"
 
-primary_email=$(
-    curl -L -s \
-        -H "Accept: application/vnd.github+json" \
-        -H "Authorization: Bearer $GITHUB_API_TOKEN" \
-        -H "X-GitHub-Api-Version: 2022-11-28" \
-        https://api.github.com/user/emails | jq -r '.[] | select(.primary) | .email'
-)
+primary_email=$(gh api "https://api.github.com/user/emails" -q "'.[] | select(.primary) | .email'")
+
 #               type          email        output_file         passphrase      quiet mode
 ssh-keygen -t ed25519 -C "$primary_email" -f ~/.ssh/github -N "$SSH_PASSPHRASE" -q
 
 # start ssh agent
 eval "$(ssh-agent -s)" >/dev/null
 
-# TODO: without passphrase prompt
-ssh-add -q ~/.ssh/github
+# workaround to pass the SSH_PASSPHRASE to ssh-add
+{
+    sleep .1
+    echo $SSH_PASSPHRASE
+} | script -q /dev/null -c 'ssh-add ~/.ssh/github'
 
 public_ssh_key=$(cat ~/.ssh/github.pub)
 
-# add ssh key to github via API
-curl -L -o /dev/null -s \
-    -X POST \
-    -H "Accept: application/vnd.github+json" \
-    -H "Authorization: Bearer $GITHUB_API_TOKEN" \
-    -H "X-GitHub-Api-Version: 2022-11-28" \
-    https://api.github.com/user/keys \
-    -d "{\"title\":\"$HOSTNAME\",\"key\":\"$public_ssh_key\"}"
+# add ssh key to github
+gh ssh-key add --title $HOSTNAME --type "authentication" $public_ssh_key
 
-# add signing key to github via API
-curl -L -o /dev/null -s \
-    -X POST \
-    -H "Accept: application/vnd.github+json" \
-    -H "Authorization: Bearer $GITHUB_API_TOKEN" \
-    -H "X-GitHub-Api-Version: 2022-11-28" \
-    https://api.github.com/user/ssh_signing_keys \
-    -d "{\"title\":\"$HOSTNAME\",\"key\":\"$public_ssh_key\"}"
+# add signing key to github
+gh ssh-key add --title $HOSTNAME --type "signing" $public_ssh_key
