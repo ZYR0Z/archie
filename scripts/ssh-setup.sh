@@ -1,5 +1,5 @@
 #!/bin/bash
-GH_TOKEN="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"
+export GH_TOKEN="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"
 
 primary_email=$(gh api "https://api.github.com/user/emails" -q "'.[] | select(.primary) | .email'")
 
