@@ -56,7 +56,7 @@ echo -e "All set!"
 
 echo -ne "
 -------------------------------------------------------------------------
-               Enabling (and Theming) Login Display Manager
+               Enabling Login Manager
 -------------------------------------------------------------------------
 "
 if [[ ${DESKTOP_ENV} == "kde" ]]; then
@@ -71,7 +71,6 @@ elif [[ "${DESKTOP_ENV}" == "gnome" ]]; then
 
 else
   if [[ ! "${DESKTOP_ENV}" == "server" ]]; then
-    # sudo pacman -S --noconfirm --needed lightdm lightdm-gtk-greeter
     sudo pacman -S --noconfirm --needed ly
     systemctl enable ly.service
   fi
@@ -117,7 +116,7 @@ fi
 
 echo -ne "
 -------------------------------------------------------------------------
-               Enabling (and Theming) Plymouth Boot Splash
+               Enabling Plymouth Boot Splash
 -------------------------------------------------------------------------
 "
 PLYMOUTH_THEMES_DIR="$HOME/archie/configs/usr/share/plymouth/themes"
