@@ -83,7 +83,8 @@ echo -ne "
 "
 
 if [[ $SSH_KEYGEN == "TRUE" ]]; then
-  (bash $SCRIPT_DIR/scripts/ssh-setup.sh) |& tee ssh-setup.log
+  chmod +x $SCRIPT_DIR/scripts/ssh-setup.sh
+  ./$SCRIPT_DIR/scripts/ssh-setup.sh |& tee ssh-setup.log
 fi
 
 echo -ne "
