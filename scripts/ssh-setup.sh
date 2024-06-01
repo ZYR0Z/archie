@@ -1,3 +1,5 @@
+#!/bin/bash
+
 primary_email=$(
     curl -L -s \
         -H "Accept: application/vnd.github+json" \
