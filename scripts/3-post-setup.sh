@@ -32,8 +32,8 @@ echo -ne "
 "
 
 if [[ $SSH_KEYGEN == "TRUE" ]]; then
-  # make sure github cli is installed
-  $AUR_HELPER -S --noconfirm --needed github-cli
+  # make sure github cli & openssh is installed
+  sudo pacman -S --noconfirm --needed github-cli openssh
 
   chmod +x ${HOME}/archie/scripts/ssh-setup.sh
   ./${HOME}/archie/scripts/ssh-setup.sh
