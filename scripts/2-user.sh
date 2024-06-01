@@ -56,15 +56,34 @@ fi
 
 export PATH=$PATH:~/.local/bin
 
+# TODO
 # Theming DE if user chose FULL installation
-if [[ $INSTALL_TYPE == "FULL" ]]; then
-  if [[ $DESKTOP_ENV == "kde" ]]; then
-    cp -r ~/archie/configs/.config/* ~/.config/
-    pip install konsave
-    konsave -i ~/archie/configs/kde.knsv
-    sleep 1
-    konsave -a kde
-  fi
+# if [[ $INSTALL_TYPE == "FULL" ]]; then
+#   if [[ $DESKTOP_ENV == "kde" ]]; then
+#     cp -r ~/archie/configs/.config/* ~/.config/
+#     pip install konsave
+#     konsave -i ~/archie/configs/kde.knsv
+#     sleep 1
+#     konsave -a kde
+#   fi
+# fi
+
+echo -ne "
+-------------------------------------------------------------------------
+                    Copying Config Files to .config
+-------------------------------------------------------------------------
+"
+
+cp -r ~/archie/configs/.config/* ~/.config/
+
+echo -ne "
+-------------------------------------------------------------------------
+                        Setting up SSH for Git
+-------------------------------------------------------------------------
+"
+
+if [[ $SSH_KEYGEN == "TRUE" ]]; then
+  (bash $SCRIPT_DIR/scripts/ssh-setup.sh) |& tee ssh-setup.log
 fi
 
 echo -ne "

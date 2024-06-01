@@ -367,6 +367,29 @@ installtype() {
     set_option INSTALL_TYPE $install_type
 }
 
+ssh_keygen() {
+    echo -ne "
+Create new SSH Key & connect it with GitHub Account? yes/no
+"
+    options=("Yes" "No")
+    select_option $? 1 "${options[@]}"
+
+    case ${options[$?]} in
+    y | Y | yes | Yes | YES)
+        read -p "Please enter your GitHub API Token: " github_api_token
+        set_option GITHUB_API_TOKEN ${github_api_token} # convert to lower case as in issue #109
+        set_option SSH_KEYGEN TRUE
+        ;;
+    n | N | no | NO | No)
+        set_option SSH_KEYGEN FALSE
+        ;;
+    *)
+        echo "Wrong option. Try again"
+        ssh_keygen
+        ;;
+    esac
+}
+
 # More features in future
 # language (){}
 
@@ -389,6 +412,8 @@ if [[ ! $desktop_env == server ]]; then
     logo
     installtype
 fi
+clear
+ssh_keygen
 clear
 logo
 diskpart

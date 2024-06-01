@@ -17,6 +17,7 @@ linux-headers
 noto-fonts-emoji
 usbutils
 xdg-user-dirs
+jq
 --END OF MINIMAL INSTALL--
 alsa-plugins
 alsa-utils
