@@ -8,10 +8,10 @@ primary_email=$(
 #               type          email        output_file         passphrase      quiet mode
 ssh-keygen -t ed25519 -C "$primary_email" -f ~/.ssh/github -N "$SSH_PASSPHRASE" -q
 
-# start ssh agent (TODO: silent)
-eval "$(ssh-agent -s)"
+# start ssh agent
+eval "$(ssh-agent -s)" >/dev/null
 
-export SSH_ASKPASS=$SSH_PASSPHRASE
+# TODO: without passphrase prompt
 ssh-add -q ~/.ssh/github
 
 public_ssh_key=$(cat ~/.ssh/github.pub)
