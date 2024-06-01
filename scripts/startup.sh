@@ -376,8 +376,8 @@ Create new SSH Key & connect it with GitHub Account? yes/no
 
     case ${options[$?]} in
     y | Y | yes | Yes | YES)
-        # read -p "Please enter your GitHub API Token: " github_api_token
-        # set_option GH_TOKEN ${github_api_token}
+        read -p "Please enter your GitHub API Token: " github_api_token
+        set_option GH_TOKEN ${github_api_token}
         set_password "SSH_PASSPHRASE"
         set_option SSH_KEYGEN TRUE
         ;;
