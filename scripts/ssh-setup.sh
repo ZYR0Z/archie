@@ -5,12 +5,14 @@ primary_email=$(
         -H "X-GitHub-Api-Version: 2022-11-28" \
         https://api.github.com/user/emails | jq -r '.[] | select(.primary) | .email'
 )
-#               type          email        output_file    quiet mode
-ssh-keygen -t ed25519 -C "$primary_email" -f ~/.ssh/github -q
+#               type          email        output_file         passphrase      quiet mode
+ssh-keygen -t ed25519 -C "$primary_email" -f ~/.ssh/github -N "$SSH_PASSPHRASE" -q
 
-# start ssh agent
+# start ssh agent (TODO: silent)
 eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/github -q
+
+export SSH_ASKPASS=$SSH_PASSPHRASE
+ssh-add -q ~/.ssh/github
 
 public_ssh_key=$(cat ~/.ssh/github.pub)
 
@@ -21,7 +23,7 @@ curl -L -o /dev/null -s \
     -H "Authorization: Bearer $GITHUB_API_TOKEN" \
     -H "X-GitHub-Api-Version: 2022-11-28" \
     https://api.github.com/user/keys \
-    -d "{\"title\":\"$NAME_OF_MACHINE\",\"key\":\"$public_ssh_key\"}"
+    -d "{\"title\":\"$HOSTNAME\",\"key\":\"$public_ssh_key\"}"
 
 # add signing key to github via API
 curl -L -o /dev/null -s \
@@ -30,6 +32,4 @@ curl -L -o /dev/null -s \
     -H "Authorization: Bearer $GITHUB_API_TOKEN" \
     -H "X-GitHub-Api-Version: 2022-11-28" \
     https://api.github.com/user/ssh_signing_keys \
-    -d "{\"title\":\"$NAME_OF_MACHINE\",\"key\":\"$public_ssh_key\"}"
-
-exit
+    -d "{\"title\":\"$HOSTNAME\",\"key\":\"$public_ssh_key\"}"
