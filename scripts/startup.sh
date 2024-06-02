@@ -349,9 +349,9 @@ Create new SSH Key for Git? yes/no:
 
     case ${options[$?]} in
     y | Y | yes | Yes | YES)
-        read -p "Please enter your username for git" git_user
+        read -p "Please enter your username for git: " git_user
         set_option GIT_USER ${git_user}
-        read -p "Please enter your email address for git" git_email
+        read -p "Please enter your email address for git: " git_email
         set_option GIT_EMAIL ${git_email}
         set_password "SSH_PASSPHRASE"
         set_option SSH_KEYGEN TRUE
