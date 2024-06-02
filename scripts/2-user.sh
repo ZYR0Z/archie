@@ -48,7 +48,7 @@ if [[ ! $AUR_HELPER == none ]]; then
   git clone "https://aur.archlinux.org/$AUR_HELPER.git"
   cd ~/$AUR_HELPER
   makepkg -si --noconfirm
-  rm -r ~/$AUR_HELPER
+  rm -rf ~/$AUR_HELPER
   sed -n '/'$INSTALL_TYPE'/q;p' ~/archie/pkg-files/aur-pkgs.txt | while read line; do
     if [[ ${line} == '--END OF MINIMAL INSTALL--' ]]; then
       continue
