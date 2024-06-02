@@ -57,9 +57,9 @@ sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="[^"]*/& splash /' /etc/default/grub
 # make timeout longer
 sed -i 's/^GRUB_TIMEOUT=.*/GRUB_TIMEOUT=30/' /etc/default/grub
 # make it maximum resolution
-sed -i 's/^GRUB_GFXMODE=.*/GRUB_GFXMODE=auto/' /etc/default/grub
+sed -i 's/^#GRUB_GFXMODE=.*/GRUB_GFXMODE=auto/' /etc/default/grub
 # probe for other operating systems
-sed -i 's/^GRUB_DISABLE_OS_PROBER=.*/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
+sed -i 's/^#GRUB_DISABLE_OS_PROBER=.*/GRUB_DISABLE_OS_PROBER=false/' /etc/default/grub
 
 echo -e "Updating grub..."
 grub-mkconfig -o /boot/grub/grub.cfg
