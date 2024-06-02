@@ -7,7 +7,7 @@
 
 ### Cleanup
 
-- [ ] remove all double packages && unnecesary ones
+- [x] remove all double packages && unnecesary ones
 - [x] cleanup gnome & kde config
 
 ### Making it faster
