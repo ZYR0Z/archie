@@ -16,7 +16,6 @@ arandr
 archlinux-xdg-menu
 nitrogen
 dex
-nordmenu
 dunst
 feh
 nwg-look
