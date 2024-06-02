@@ -1,3 +1,2 @@
 --END OF MINIMAL INSTALL--
 brave-bin
-
