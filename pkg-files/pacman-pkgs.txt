@@ -23,7 +23,6 @@ alsa-plugins
 alsa-utils
 autoconf
 automake
-awesome-terminal-fonts
 bash-completion
 bind
 bison
@@ -42,7 +41,6 @@ dmidecode
 dnsmasq
 dtc
 efibootmgr
-egl-wayland
 exfat-utils
 flex
 fuse2
@@ -75,11 +73,9 @@ openbsd-netcat
 openssh
 os-prober
 p7zip
-papirus-icon-theme
 patch
 picom
 pkgconf
-powerline-fonts
 pulseaudio
 pulseaudio-alsa
 pulseaudio-bluetooth
@@ -90,13 +86,9 @@ python-pip
 qemu
 snap-pac
 snapper
-steam
 swtpm
 synergy
-terminus-font
 traceroute
-ttf-droid
-ttf-hack
 ttf-roboto
 ufw
 unrar
@@ -104,9 +96,6 @@ unzip
 virt-manager
 virt-viewer
 which
-wine-gecko
-wine-mono
-winetricks
 zip
 zsh
 zsh-syntax-highlighting

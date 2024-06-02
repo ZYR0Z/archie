@@ -4,7 +4,6 @@ neovim
 viewnior
 pavucontrol
 wl-clipboard
-kitty
 nordic-theme
 deepin-icon-theme
 inter-font
