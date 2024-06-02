@@ -32,16 +32,15 @@ echo -ne "
 "
 
 if [[ $SSH_KEYGEN == "TRUE" ]]; then
-  # make sure github cli & openssh is installed
-  sudo pacman -S --noconfirm --needed github-cli openssh
-
-  chmod +x ${HOME}/archie/scripts/ssh-setup.sh
-  ./${HOME}/archie/scripts/ssh-setup.sh
+  # make sure openssh is installed
+  sudo pacman -S --noconfirm --needed openssh
+  chmod +x ${HOME}/archie/scripts/git-ssh-setup.sh
+  ./${HOME}/archie/scripts/git-ssh-setup.sh
 fi
 
 echo -ne "
 -------------------------------------------------------------------------
-               Creating (and Theming) Grub Boot Menu
+               Creating Grub Boot Menu
 -------------------------------------------------------------------------
 "
 # set kernel parameter for decrypting the drive

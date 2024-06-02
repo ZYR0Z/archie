@@ -369,15 +369,17 @@ installtype() {
 
 ssh_keygen() {
     echo -ne "
-Create new SSH Key & connect it with GitHub Account? yes/no
+Create new SSH Key for Git? yes/no:
 "
     options=("Yes" "No")
     select_option $? 1 "${options[@]}"
 
     case ${options[$?]} in
     y | Y | yes | Yes | YES)
-        read -p "Please enter your GitHub API Token: " github_api_token
-        set_option GH_TOKEN ${github_api_token}
+        read -p "Please enter your username for git" git_user
+        set_option GIT_USER ${git_user}
+        read -p "Please enter your email address for git" git_email
+        set_option GIT_EMAIL ${git_email}
         set_password "SSH_PASSPHRASE"
         set_option SSH_KEYGEN TRUE
         ;;
