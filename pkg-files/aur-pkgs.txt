@@ -1,7 +1,4 @@
 --END OF MINIMAL INSTALL--
 brave-bin
 bridge-utils
-github-desktop-bin
-nerd-fonts-fira-code
-ttf-meslo
 

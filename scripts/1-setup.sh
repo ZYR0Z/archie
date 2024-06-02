@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
-#github-action genshdoc
-#
-# @file Setup
-# @brief Configures installed system, installs base packages, and creates user.
 echo -ne "
 -------------------------------------------------------------------------
                 █████╗ ██████╗  ██████╗██╗  ██╗██╗███████╗
@@ -13,7 +9,6 @@ echo -ne "
                ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝╚══════╝
 ------------------------------------------------------------------------
                     Automated Arch Linux Installer
-                        SCRIPTHOME: archie
 -------------------------------------------------------------------------
 "
 source $HOME/archie/configs/setup.conf

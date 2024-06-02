@@ -7,22 +7,14 @@ wl-clipboard
 kitty
 nordic-theme
 deepin-icon-theme
-otf-sora
-ttf-nerd-fonts-symbols-common
-otf-firamono-nerd
 inter-font
-ttf-fantasque-nerd
 noto-fonts
 noto-fonts-emoji
-ttf-comfortaa
 ttf-jetbrains-mono-nerd
-ttf-icomoon-feather
-ttf-iosevka-nerd
-adobe-source-code-pro-fonts
 acpi
 arandr
 archlinux-xdg-menu
-awesome-terminal-fonts
+nitrogen
 dex
 dmenu
 dunst
@@ -38,7 +30,6 @@ i3blocks
 i3lock
 i3status
 jq
-ly
 nwg-look
 mpv
 playerctl
@@ -56,4 +47,5 @@ xbindkeys
 xdg-user-dirs-gtk
 xorg-xdpyinfo
 zip
+picom
 --END OF MINIMAL INSTALL--

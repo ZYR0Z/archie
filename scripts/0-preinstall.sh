@@ -1,16 +1,4 @@
 #!/usr/bin/env bash
-# -------------------------------------------------------------------------
-#                 █████╗ ██████╗  ██████╗██╗  ██╗██╗███████╗
-#                ██╔══██╗██╔══██╗██╔════╝██║  ██║██║██╔════╝
-#                ███████║██████╔╝██║     ███████║██║█████╗
-#                ██╔══██║██╔══██╗██║     ██╔══██║██║██╔══╝
-#                ██║  ██║██║  ██║╚██████╗██║  ██║██║███████╗
-#                ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝╚══════╝
-# ------------------------------------------------------------------------
-#github-action genshdoc
-#
-# @file Preinstall
-# @brief Contains the steps necessary to configure and pacstrap the install to selected drive.
 echo -ne "
 -------------------------------------------------------------------------
                 █████╗ ██████╗  ██████╗██╗  ██╗██╗███████╗
@@ -72,7 +60,6 @@ echo -ne "
                     Creating Filesystems
 -------------------------------------------------------------------------
 "
-# @description Creates the btrfs subvolumes.
 createsubvolumes() {
     btrfs subvolume create /mnt/@
     btrfs subvolume create /mnt/@home
@@ -81,7 +68,6 @@ createsubvolumes() {
     btrfs subvolume create /mnt/@.snapshots
 }
 
-# @description Mount all btrfs subvolumes after root has been mounted.
 mountallsubvol() {
     mount -o ${MOUNT_OPTIONS},subvol=@home ${partition3} /mnt/home
     mount -o ${MOUNT_OPTIONS},subvol=@tmp ${partition3} /mnt/tmp
@@ -89,7 +75,6 @@ mountallsubvol() {
     mount -o ${MOUNT_OPTIONS},subvol=@.snapshots ${partition3} /mnt/.snapshots
 }
 
-# @description BTRFS subvolulme creation and mounting.
 subvolumesetup() {
     # create nonroot subvolumes
     createsubvolumes

@@ -1,21 +1,10 @@
 #!/usr/bin/env bash
-#github-action genshdoc
-#
-# @file Startup
-# @brief This script will ask users about their prefrences like disk, file system, timezone, keyboard layout, user name, password, etc.
-# @stdout Output routed to startup.log
-# @stderror Output routed to startup.log
 
-# @setting-header General Settings
-# @setting CONFIG_FILE string[$CONFIGS_DIR/setup.conf] Location of setup.conf to be used by set_option and all subsequent scripts.
 CONFIG_FILE=$CONFIGS_DIR/setup.conf
 if [ ! -f $CONFIG_FILE ]; then # check if file exists
     touch -f $CONFIG_FILE      # create file if not exists
 fi
 
-# @description set options in setup.conf
-# @arg $1 string Configuration variable.
-# @arg $2 string Configuration value.
 set_option() {
     if grep -Eq "^${1}.*" $CONFIG_FILE; then # check if option exists
         sed -i -e "/^${1}.*/d" $CONFIG_FILE  # delete option if exists
@@ -75,12 +64,6 @@ background_checks() {
     docker_check
 }
 
-# Renders a text based list of options that can be selected by the
-# user using up, down and enter keys and returns the chosen option.
-#
-#   Arguments   : list of options, maximum of 256
-#                 "opt1" "opt2" ...
-#   Return value: selected index (0 for opt1, 1 for opt2 ...)
 select_option() {
 
     # little helpers for terminal print control and key input
@@ -198,8 +181,6 @@ select_option() {
 
     return $(($active_col + $active_row * $colmax))
 }
-# @description Displays ArchTitus logo
-# @noargs
 logo() {
     # This will be shown on every set as user is progressing
     echo -ne "
@@ -215,33 +196,30 @@ logo() {
 ------------------------------------------------------------------------
 "
 }
-# @description This function will handle file systems. At this movement we are handling only
-# btrfs and ext4. Others will be added in future.
 filesystem() {
     echo -ne "
 Please Select your file system for both boot and root
 "
-    options=("btrfs" "ext4" "luks" "exit")
+    options=("ext4" "luks" "exit")
     select_option $? 1 "${options[@]}"
 
     case $? in
-    0) set_option FS btrfs ;;
-    1) set_option FS ext4 ;;
-    2)
+    0) set_option FS ext4 ;;
+    1)
         set_password "LUKS_PASSWORD"
         set_option FS luks
         ;;
-    3) exit ;;
+    2) exit ;;
     *)
         echo "Wrong option please select again"
         filesystem
         ;;
     esac
 }
-# @description Detects and sets timezone.
+
 timezone() {
     # Added this from arch wiki https://wiki.archlinux.org/title/System_time
-    time_zone="$(curl --fail https://ipapi.co/timezone)"
+    time_zone="$(curl -s --fail https://ipapi.co/timezone)"
     echo -ne "
 System detected your timezone to be '$time_zone' \n"
     echo -ne "Is this correct?
@@ -266,7 +244,7 @@ System detected your timezone to be '$time_zone' \n"
         ;;
     esac
 }
-# @description Set user's keyboard mapping.
+
 keymap() {
     echo -ne "
 Please select key board layout from this list"
@@ -280,7 +258,6 @@ Please select key board layout from this list"
     set_option KEYMAP $keymap
 }
 
-# @description Choose whether drive is SSD or not.
 drivessd() {
     echo -ne "
 Is this an ssd? yes/no:
@@ -303,7 +280,6 @@ Is this an ssd? yes/no:
     esac
 }
 
-# @description Disk selection for drive to be used with installation.
 diskpart() {
     echo -ne "
 ------------------------------------------------------------------------
@@ -327,7 +303,6 @@ Select the disk to install on: '
     drivessd
 }
 
-# @description Gather username and password to be used for installation.
 userinfo() {
     read -p "Please enter your username: " username
     set_option USERNAME ${username,,} # convert to lower case as in issue #109
@@ -336,7 +311,6 @@ userinfo() {
     set_option NAME_OF_MACHINE $nameofmachine
 }
 
-# @description Choose AUR helper.
 aurhelper() {
     # Let the user choose AUR helper from predefined list
     echo -ne "Please enter your desired AUR helper:\n"
@@ -346,7 +320,6 @@ aurhelper() {
     set_option AUR_HELPER $aur_helper
 }
 
-# @description Choose Desktop Environment
 desktopenv() {
     # Let the user choose Desktop Enviroment from predefined list
     echo -ne "Please select your desired Desktop Enviroment:\n"

@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
-#github-action genshdoc
-#
-# @file Post-Setup
-# @brief Finalizing installation configurations and cleaning up after script.
 echo -ne "
 -------------------------------------------------------------------------
                 █████╗ ██████╗  ██████╗██╗  ██╗██╗███████╗
@@ -13,7 +9,6 @@ echo -ne "
                ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝╚══════╝
 ------------------------------------------------------------------------
                     Automated Arch Linux Installer
-                        SCRIPTHOME: archie
 -------------------------------------------------------------------------
 
 Final Setup and Configurations
@@ -34,8 +29,25 @@ echo -ne "
 if [[ $SSH_KEYGEN == "TRUE" ]]; then
   # make sure openssh is installed
   sudo pacman -S --noconfirm --needed openssh
-  chmod +x ${HOME}/archie/scripts/git-ssh-setup.sh
-  ./${HOME}/archie/scripts/git-ssh-setup.sh
+
+  #              type         email        output_file        passphrase
+  ssh-keygen -t ed25519 -C "$GIT_EMAIL" -f ~/.ssh/git -N "$SSH_PASSPHRASE"
+
+  # start ssh agent
+  eval "$(ssh-agent -s)" >/dev/null
+
+  # workaround to pass the SSH_PASSPHRASE to ssh-add
+  {
+    sleep .1
+    echo $SSH_PASSPHRASE
+  } | script -q /dev/null -c 'ssh-add ~/.ssh/git'
+
+  git config --global user.name "$GIT_USER"
+  git config --global user.email "$GIT_EMAIL"
+  git config --global user.signingkey "$HOME/.ssh/git.pub"
+  git config --global gpg.format ssh
+  git config --global commit.gpgsign true
+
 fi
 
 echo -ne "
@@ -70,21 +82,10 @@ echo -ne "
                Enabling Login Manager
 -------------------------------------------------------------------------
 "
-if [[ ${DESKTOP_ENV} == "kde" ]]; then
-  systemctl enable sddm.service
-  if [[ ${INSTALL_TYPE} == "FULL" ]]; then
-    echo [Theme] >>/etc/sddm.conf
-    echo Current=Nordic >>/etc/sddm.conf
-  fi
 
-elif [[ "${DESKTOP_ENV}" == "gnome" ]]; then
-  systemctl enable gdm.service
-
-else
-  if [[ ! "${DESKTOP_ENV}" == "server" ]]; then
-    sudo pacman -S --noconfirm --needed ly
-    systemctl enable ly.service
-  fi
+if [[ ! "${DESKTOP_ENV}" == "server" ]]; then
+  sudo pacman -S --noconfirm --needed ly
+  systemctl enable ly.service
 fi
 
 echo -ne "
