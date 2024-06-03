@@ -22,14 +22,22 @@ fi
 
 echo -ne "
 -------------------------------------------------------------------------
+                        Enabling SSH Server
+-------------------------------------------------------------------------
+"
+
+if [[ $ENABLE_SSH_SERVER == "TRUE" ]]; then
+  systemctl enable sshd.service
+  systemctl start sshd.service
+fi
+
+echo -ne "
+-------------------------------------------------------------------------
                         Setting up SSH for Git
 -------------------------------------------------------------------------
 "
 
 if [[ $SSH_KEYGEN == "TRUE" ]]; then
-  # make sure openssh is installed
-  sudo pacman -S --noconfirm --needed openssh
-
   #              type         email        output_file        passphrase
   ssh-keygen -t ed25519 -C "$GIT_EMAIL" -f ~/.ssh/git -N "$SSH_PASSPHRASE"
 
@@ -79,7 +87,7 @@ echo -e "All set!"
 
 echo -ne "
 -------------------------------------------------------------------------
-               Enabling Login Manager
+                        Enabling Login Manager
 -------------------------------------------------------------------------
 "
 

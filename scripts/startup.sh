@@ -366,6 +366,27 @@ Create new SSH Key for Git? yes/no:
     esac
 }
 
+enable_ssh_server() {
+    echo -ne "
+Enable SSH Server? yes/no:
+"
+    options=("Yes" "No")
+    select_option $? 1 "${options[@]}"
+
+    case ${options[$?]} in
+    y | Y | yes | Yes | YES)
+        set_option ENABLE_SSH_SERVER TRUE
+        ;;
+    n | N | no | NO | No)
+        set_option ENABLE_SSH_SERVER FALSE
+        ;;
+    *)
+        echo "Wrong option. Try again"
+        enable_ssh_server
+        ;;
+    esac
+}
+
 # More features in future
 # language (){}
 
@@ -387,6 +408,11 @@ if [[ ! $desktop_env == server ]]; then
     clear
     logo
     installtype
+fi
+if [[ $desktop_env == server ]]; then
+    clear
+    logo
+    enable_ssh_server
 fi
 clear
 ssh_keygen

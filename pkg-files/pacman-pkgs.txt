@@ -19,6 +19,7 @@ noto-fonts
 usbutils
 xdg-user-dirs
 jq
+openssh
 --END OF MINIMAL INSTALL--
 alsa-plugins
 alsa-utils
@@ -60,7 +61,6 @@ neofetch
 ntfs-3g
 ntp
 openbsd-netcat
-openssh
 os-prober
 p7zip
 patch
